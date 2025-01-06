@@ -111,6 +111,7 @@ Example:
 
 
 ### Success Response
+
 If the user is successfully logged in, the endpoint will return a JSON object with the following fields:
 
 Example:
@@ -128,3 +129,83 @@ Example:
   }
 }
 ```
+
+
+
+
+# User Profile Endpoint
+
+## Endpoint: `/users/profile`
+
+### Method: GET
+
+### Description
+This endpoint retrieves the profile information of the authenticated user. Requires a valid JWT token.
+
+### Authentication
+Requires Bearer token in Authorization header or token in cookies.
+
+Example:
+```bash
+Authorization: Bearer <JWT_TOKEN>
+```
+
+### Error Response
+If the user is not authorized to access this route, the endpoint will return a JSON object with an error message.
+
+Example:
+```json
+{
+  "message": "Not authorized to access this route"
+}
+```
+
+### Success Response
+If the request is successful, the endpoint will return a JSON object with the following fields:
+
+Example:
+```json
+{
+  "_id": "USER_ID",
+  "fullname": {
+    "firstname": "John",
+    "lastname": "Doe"
+  },
+  "email": "john.doe@example.com",
+  "socketId": null
+}
+```
+
+# User Logout Endpoint
+
+## Endpoint: /users/logout
+
+### Method: GET
+
+### Description
+This endpoint logs out the current user by clearing the authentication token cookie and blacklisting the current token.
+
+### Authentication
+Requires Bearer token in Authorization header or token in cookies.
+
+Example:
+```bash
+Authorization: Bearer <JWT_TOKEN>
+```
+
+### Error Response
+= `Status Code: 401 Unauthorized`
+
+Example:
+```json
+{
+  "message": "Not authorized to access this route"
+}
+```
+
+### Success Response
+- `Status Code: 200 OK`
+- `Clears the authentication cookie`
+- `Blacklists the current token`
+
+
