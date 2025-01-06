@@ -72,3 +72,59 @@ Example:
   }
 }
 ```
+
+
+
+
+
+## Endpoint: `users/login`
+
+
+###  Method: POST
+
+### Description
+This endpoint is used to log in an existing user. It validates the input data, checks the user's credentials, and returns a JSON Web Token (JWT) for authentication.
+
+### Request Body
+The request body should be a JSON object with the following fields:
+
+- `email: A valid email address (required)`
+- `password: A string with a minimum length of 6 characters (required)`
+
+Example:
+```json
+{
+  "email": "john.doe@example.com",
+  "password": "password123"
+}
+```
+
+### Error Response
+If the input data is invalid or the credentials are incorrect, the endpoint will return a JSON object with an error message.
+
+Example:
+```json
+{
+  "message": "Invalid email or password"
+}
+```
+
+
+### Success Response
+If the user is successfully logged in, the endpoint will return a JSON object with the following fields:
+
+Example:
+```json
+{
+  "token": "JWT_TOKEN_HERE",
+  "user": {
+    "_id": "USER_ID",
+    "fullname": {
+      "firstname": "John",
+      "lastname": "Doe"
+    },
+    "email": "john.doe@example.com",
+    "socketId": null
+  }
+}
+```
