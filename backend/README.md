@@ -73,8 +73,7 @@ Example:
 }
 ```
 
-
-
+# User Login Endpoint
 
 
 ## Endpoint: `users/login`
@@ -129,7 +128,6 @@ Example:
   }
 }
 ```
-
 
 
 
@@ -209,3 +207,113 @@ Example:
 - `Blacklists the current token`
 
 
+# Captain Registration Endpoint
+
+## Endpoint: `/captains/register`
+
+### Method: POST
+
+### Description
+This endpoint is used to register a new captain. It validates the input data, hashes the password, creates a new captain in the database, and returns a JSON Web Token (JWT) for authentication.
+
+### Request Body
+The request body should be a JSON object with the following fields:
+
+- `fullname`: An object containing:
+  - `firstname`: A string with a minimum length of 3 characters (required)
+  - `lastname`: A string with a minimum length of 3 characters (optional)
+- `email`: A valid email address (required)
+- `password`: A string with a minimum length of 6 characters (required)
+- `vehicle`: An object containing:
+  - `color`: A string with a minimum length of 3 characters (required)
+  - `plate`: A string with a minimum length of 3 characters (required)
+  - `capacity`: An integer with a minimum value of 1 (required)
+  - `vehicleType`: A string that must be one of `car`, `motorcycle`, or `bicycle` (required)
+
+Example:
+```json
+{
+  "fullname": {
+    "firstname": "John",
+    "lastname": "Doe"
+  },
+  "email": "john.doe@example.com",
+  "password": "password123",
+  "vehicle": {
+    "color": "Red",
+    "plate": "ABC123",
+    "capacity": 4,
+    "vehicleType": "car"
+  }
+}
+```
+
+### Error Response
+If the input data is invalid, the endpoint will return a JSON object with an array of error messages.
+
+
+Example:
+```json
+{
+  "errors": [
+    {
+      "msg": "Invalid Email",
+      "param": "email",
+      "location": "body"
+    },
+    {
+      "msg": "First name must be at least 3 characters",
+      "param": "fullname.firstname",
+      "location": "body"
+    },
+    {
+      "msg": "Password must be at least 6 characters",
+      "param": "password",
+      "location": "body"
+    },
+    {
+      "msg": "Color must be at least 3 characters",
+      "param": "vehicle.color",
+      "location": "body"
+    },
+    {
+      "msg": "Plate must be at least 3 characters",
+      "param": "vehicle.plate",
+      "location": "body"
+    },
+    {
+      "msg": "Minimum capacity is 1",
+      "param": "vehicle.capacity",
+      "location": "body"
+    },
+    {
+      "msg": "Invalid vehicle type",
+      "param": "vehicle.vehicleType",
+      "location": "body"
+    }
+  ]
+}
+```
+### Success Response
+If the captain is successfully registered, the endpoint will return a JSON object with the following fields:
+
+Example:
+```json
+{
+  "token": "JWT_TOKEN_HERE",
+  "captain": {
+    "_id": "CAPTAIN_ID",
+    "fullname": {
+      "firstname": "John",
+      "lastname": "Doe"
+    },
+    "email": "john.doe@example.com",
+    "vehicle": {
+      "color": "Red",
+      "plate": "ABC123",
+      "capacity": 4,
+      "vehicleType": "car"
+    }
+  }
+}
+```
