@@ -1,4 +1,5 @@
 import { createContext } from "react";
+import { useState } from "react";
 
 
 export const UserDataContext = createContext();
@@ -10,7 +11,8 @@ const UserContext = ({ children }) => {
             firstname: '',
             lastname: ''
         },
-        email:''
+        email:'',
+        password:''
     })
 
 

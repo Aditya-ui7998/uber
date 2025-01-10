@@ -1,18 +1,38 @@
-import { useState } from "react"
-import { Link } from "react-router-dom"
+import { useContext, useState } from "react"
+import { Link, useNavigate } from "react-router-dom"
+import { CaptainDataContext } from "../context/CaptainContext";
+import axios from "axios";
+
 
 const CaptainLogin = () => {
 
   const[ email,setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [captainData, setCaptainData] = useState({});
+  // const [captainData, setCaptainData] = useState({});
 
-  const submitHandler = (e) => {
+  const { captains , setCaptains } = useContext(CaptainDataContext);
+  const navigate = useNavigate();
+
+  const submitHandler = async (e) => {
     e.preventDefault();
-    setCaptainData({
+    try{
+   const captain ={
       email: email,
        password:password
-      });
+      };
+
+      const response = await axios.post(`${import.meta.env.VITE_BASE_URL}/captains/login`,captain);
+      if(response.status === 200){
+        const data = response.data;
+        setCaptains(data.captain);
+        localStorage.setItem('token', data.token);
+        navigate('/captain-home');
+      }}catch(error){
+        console.error('Login failed:', error);
+        alert('Login failed. Please try again');
+      }
+      setEmail('');
+          setPassword('');
   }
 
 
@@ -22,8 +42,6 @@ const CaptainLogin = () => {
       <img className="w-16 mb-10" src="https://upload.wikimedia.org/wikipedia/commons/c/cc/Uber_logo_2018.png" alt="" />
         <form onSubmit={(e)=>{
           submitHandler(e);
-          setEmail('');
-          setPassword('');
         }} >
             <h3 className="text-lg font-medium mb-2">Whats your email address?</h3>
             <input className="rounded px-4 py-2 border mb-7 w-full text-lg  placeholder:text-base bg-[#eeeeee]"
