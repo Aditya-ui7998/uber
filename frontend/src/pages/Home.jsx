@@ -4,6 +4,8 @@ import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
 import { IoIosArrowDown } from "react-icons/io";
 import LocationSearchPanel from "../components/LocationSearchPanel";
+import 'remixicon/fonts/remixicon.css';
+
 
 const Home = () => {
   const [pickup, setPickup] = useState("");
@@ -11,6 +13,8 @@ const Home = () => {
   const [panelOpen, setPanelOpen] = useState(false);
   const panelRef = useRef(null);
   const panelClose = useRef(null);
+  const [vehiclePanel, setVehiclePanel] = useState(false);
+  const vehiclePanelRef = useRef(null);
 
   const submitHandler = (e) => {
     e.preventDefault();
@@ -34,18 +38,31 @@ if(panelOpen){
     opacity:0
   })
 }
-  },[panelOpen])
+  },[panelOpen]);
+
+  useGSAP(()=>{
+    if(vehiclePanel){
+      gsap.to(vehiclePanelRef.current,{
+        transform: "translateY(0)",
+      })
+    }else{
+      gsap.to(vehiclePanelRef.current,{
+        transform: "translateY(100%)",
+      })
+    }
+  },[vehiclePanel])
 
 
   return (
-    <div className="h-screen relative overflow-hidden">
+    <div
+     className="h-screen relative overflow-hidden">
       <img
         className="w-16 absolute left-5 top-5"
         src="https://upload.wikimedia.org/wikipedia/commons/c/cc/Uber_logo_2018.png"
         alt=""
       />
 
-      <div className="h-screen w-screen">
+      <div  className="h-screen w-screen">
         {/* temporary img */}
         <img
           className="w-full h-full object-cover"
@@ -94,11 +111,17 @@ if(panelOpen){
         </div>
 
         <div ref={panelRef} className="bg-white h-0">
-          <LocationSearchPanel/>
+          <LocationSearchPanel setPanelOpen={setPanelOpen} setVehiclePanel={setVehiclePanel}/>
         </div>
       </div>
 
-      <div className="fixed w-full z-10 bottom-0 translate-y-full bg-white px-3 py-6">
+      <div ref={vehiclePanelRef} className="fixed w-full z-10 bottom-0 translate-y-full bg-white px-3 py-6">
+      <h5 onClick={()=>{
+        setVehiclePanel(false);
+      }} className="absolute top-0 left-1/2  flex items-center justify-center">
+  <i className="ri-arrow-down-s-fill text-2xl"></i>
+</h5>
+
         <h3 className="text-2xl mb-3 font-semibold">Choose a vehicle</h3>
         <div className="border-2 active:border-black bg-gray-100 mb-2 rounded-xl flex w-full items-center justify-between p-3">
           <img className="w-16" src="https://www.uber-assets.com/image/upload/f_auto,q_auto:eco,c_fill,h_552,w_552/v1555367538/assets/31/ad21b7-595c-42e8-ac53-53966b4a5fee/original/Final_Black.png" alt="" />
