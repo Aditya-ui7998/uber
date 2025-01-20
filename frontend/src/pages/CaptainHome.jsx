@@ -1,7 +1,46 @@
 import { Link } from "react-router-dom"
+import CaptainDetails from "../components/CaptainDetails"
+import PopUp from "../components/PopUp"
+import { useRef, useState } from "react"
+import { useGSAP } from '@gsap/react';
+import gsap from 'gsap';
+import ConfirmPopUp from "../components/ConfirmPopUp";
 
 
 const CaptainHome = () => {
+
+  const [popUpPanel, setPopUpPanel] = useState(true);
+  const [confirmPopUpPanel, setConfirmPopUpPanel] = useState(false);
+  const popUpRef = useRef(null);
+  const confirmPopUpRef = useRef(null);
+
+
+  useGSAP(()=>{
+    if(popUpPanel){
+      gsap.to(popUpRef.current,{
+        transform: "translateY(0)",
+      })
+    }else{
+      gsap.to(popUpRef.current,{
+        transform: "translateY(100%)",
+      })
+    }
+  },[popUpPanel]);
+
+
+  useGSAP(()=>{
+    if(confirmPopUpPanel){
+      gsap.to(confirmPopUpRef.current,{
+        transform: "translateY(0)",
+      })
+    }else{
+      gsap.to(confirmPopUpRef.current,{
+        transform: "translateY(100%)",
+      })
+    }
+  },[confirmPopUpPanel]);
+
+
   return (
     <div className="h-screen">
 
@@ -12,44 +51,22 @@ const CaptainHome = () => {
     </Link>
  </div>
     
-            <div className="h-1/2 ">
+            <div className="h-3/5 ">
                 <img className="h-full w-full object-cover" src="https://storage.googleapis.com/support-forums-api/attachment/thread-5374933-2852463376184676745.jpg" alt="" />
             </div>
     
-            <div className="h-1/2 p-6 ">
-           
-           <div className="flex items-center justify-between border-b-2 border-gray-200 mb-5">
-            <div className="flex items-center justify-start gap-3">
-<img className="h-10 w-10 rounded-full object-cover" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRdlMd7stpWUCmjpfRjUsQ72xSWikidbgaI1w&s" alt="" />
-<h4 className="text-lg font-medium">Aditya Kashyap</h4>
+            <div className="h-2/5 p-6 ">
+           <CaptainDetails/> 
             </div>
 
-            <div>
-              <h4 className="text-xl font-medium">₹295.50</h4>
-              <p className="text-sm text-gray-600">Earned</p>
-            </div>      
-           </div>
-    
-    <div className="flex justify-center gap-5 items-start">
-      <div  className="text-center">
-      <i className="text-3xl font-thin ri-timer-2-line"></i>
-      <h5 className="text-lg font-medium">10.2</h5>
-      <p className="text-sm text-gray-600">Hours Online</p>
+            <div ref={popUpRef} className="fixed w-full translate-y-full z-10 bottom-0  bg-white px-3 py-6 pt-12">
+<PopUp setPopUpPanel={setPopUpPanel} setConfirmPopUpPanel={setConfirmPopUpPanel}/>
       </div>
 
-      <div className="text-center">
-      <i className="text-3xl font-thin ri-speed-up-line"></i>
-      <h5 className="text-lg font-medium">10.2</h5>
-      <p className="text-sm text-gray-600">Hours Online</p>
+            <div ref={confirmPopUpRef} className="fixed h-screen w-full translate-y-full z-10 bottom-0  bg-white px-3 py-6 pt-12">
+<ConfirmPopUp setConfirmPopUpPanel={setConfirmPopUpPanel} setPopUpPanel={setPopUpPanel}/>
       </div>
 
-      <div className="text-center">
-      <i className="text-3xl font-thin ri-booklet-line"></i>
-      <h5 className="text-lg font-medium">10.2</h5>
-      <p className="text-sm text-gray-600">Hours Online</p>
-      </div>
-    </div>
-            </div>
         </div>
   )
 }
