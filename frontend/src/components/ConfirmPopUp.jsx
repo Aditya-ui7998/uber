@@ -2,6 +2,11 @@ import React from 'react'
 import { Link } from 'react-router-dom';
 
 const ConfirmPopUp = ({ setPopUpPanel, setConfirmPopUpPanel }) => {
+
+ const submitHandler =(e)=>{
+console.log('hi')
+  }
+
   return (
     <div>
           <h5
@@ -56,7 +61,20 @@ const ConfirmPopUp = ({ setPopUpPanel, setConfirmPopUpPanel }) => {
           </div>
         </div>
 
-        <Link to='/captain-riding' className="felc justify-center w-full mt-5 bg-green-500 text-white p-2 font-semibold">
+
+<form action="">
+
+</form>
+
+
+        <div className='mt-6 w-full'>
+       <form onSubmit={(e)=>{
+        submitHandler(e);
+       }}>
+
+<input type="text" placeholder='enter otp'  className="bg-[#eeeeee] px-12 py-2 text-lg rounded-lg w-full mt-5"/>
+
+       <Link to='/captain-riding' className="flex justify-center w-full mt-5 bg-green-500 text-white p-2 font-semibold">
           Confirm
         </Link>
 
@@ -66,6 +84,8 @@ const ConfirmPopUp = ({ setPopUpPanel, setConfirmPopUpPanel }) => {
           }} className="w-full mt-1 bg-red-500 text-white p-2 font-semibold">
         Cancel
         </button>
+       </form>
+        </div>
       </div>
     </div>
   )
