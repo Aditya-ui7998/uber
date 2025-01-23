@@ -1,10 +1,12 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Link } from 'react-router-dom';
 
 const ConfirmPopUp = ({ setPopUpPanel, setConfirmPopUpPanel }) => {
 
+  const [otp, setOtp] = useState('')
+
  const submitHandler =(e)=>{
-console.log('hi')
+e.preventDefault();
   }
 
   return (
@@ -72,7 +74,9 @@ console.log('hi')
         submitHandler(e);
        }}>
 
-<input type="text" placeholder='enter otp'  className="bg-[#eeeeee] px-12 py-2 text-lg rounded-lg w-full mt-5"/>
+<input value={otp} onChange={(e)=>{
+setOtp(e.target.value)
+}} type="text" placeholder='enter otp'  className="bg-[#eeeeee] px-12 py-2 text-lg rounded-lg w-full mt-5"/>
 
        <Link to='/captain-riding' className="flex justify-center w-full mt-5 bg-green-500 text-white p-2 font-semibold">
           Confirm

@@ -1,8 +1,8 @@
 import { Link } from "react-router-dom"
 import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
-import { useRef } from "react";
-
+import { useRef,useState } from "react";
+import FinishRide from '../pages/FinishRide'
 
 const CaptainRiding = () => {
 
@@ -36,7 +36,11 @@ const CaptainRiding = () => {
                 <img className="h-full w-full object-cover" src="https://storage.googleapis.com/support-forums-api/attachment/thread-5374933-2852463376184676745.jpg" alt="" />
             </div>
     
-            <div className="h-1/5 p-6 bg-yellow-400 flex relative items-center justify-between">
+            <div className="h-1/5 p-6 bg-yellow-400 flex relative items-center justify-between"
+            onClick={()=>{
+              setFinishRiding(true)
+            }}
+            >
             <h5
         className="absolute p-1 text-center top-0  w-[90%]"
       >
@@ -48,7 +52,7 @@ const CaptainRiding = () => {
             </div>
 
             <div ref={finishRidingRef} className="fixed w-full translate-y-full z-10 bottom-0  bg-white px-3 py-6 pt-12">
-<PopUp setPopUpPanel={setPopUpPanel} />
+<FinishRide  setFinishRiding={setFinishRiding}/>
       </div>
 
         </div>
