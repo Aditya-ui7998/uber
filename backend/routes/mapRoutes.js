@@ -5,7 +5,7 @@ const mapController = require('../controllers/maps.controller');
 const { query } = require('express-validator');
 
 router.get('/get-coordinates',
-    query('address').isString().isLength({ min:3 }),
+    query('address').isString().isLength({ min:5 }),
     authMiddleware.authUser, mapController );
 
 module.exports = router;
